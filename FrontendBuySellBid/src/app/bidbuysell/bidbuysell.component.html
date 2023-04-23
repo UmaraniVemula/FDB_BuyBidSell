@@ -1,0 +1,268 @@
+<H1 style="text-align: center;">Buy Bid Sell</H1>
+
+<div class="container">
+  
+  <!-- <form (ngSubmit)="getData(rating)" #todoForm="ngForm">
+    <label>
+      Rating:
+      <input type="number" name="rating" [(ngModel)]="rating" required>
+    </label>
+    <button type="submit" [disabled]="!todoForm.form.valid">Submit</button>
+  </form> -->
+  
+  <form  #todoForm="ngForm">
+    <fieldset class="form-group">
+      <!-- <label>Please enter Rating</label>
+      <input type="number"
+      [(ngModel)]="rating"
+      class="form-control" name="rating" required="required" > -->
+      
+  <table>
+    <thead>
+      <tr>
+        <th>
+          <label>Buyer Name:</label>
+        </th>
+        <th>
+          <input type="text"
+              [(ngModel)]="buyerName"
+              class="form-control" name="buyerName" required="required" >
+        </th>
+        <th>
+          <label>Item Id:</label>
+        </th>
+        <th>
+          <input type="text"
+              [(ngModel)]="itemId"
+              class="form-control" name="itemId" required="required" >
+        </th>
+        <th>
+          <label>Seller Rating:</label>
+        </th>
+        <th>
+          <input type="number"
+              [(ngModel)]="sRating"
+              class="form-control" name="sRating" required="required" >
+        </th>
+        <th>
+          <label>Buyer Rating:</label>
+        </th>
+        <th>
+          <input type="number"
+              [(ngModel)]="bRating"
+              class="form-control" name="bRating" required="required" >
+        </th>
+        <th> 
+          <button (click)=createOrder(buyerName,itemId,sRating,bRating) class="btn btn-success">Create Order</button>
+
+        </th>
+      </tr>
+    </thead>
+  </table>
+      <table class="table">
+        <thead>
+          <tr>
+            <table class="table">
+              <tr>
+                <th>
+                  <label>Please enter Seller Rating</label>
+                  <input type="number"
+                  [(ngModel)]="sellerRating"
+                  class="form-control" name="sellerRating" required="required" >
+                </th>
+                <th><button  (click)=getSeller(sellerRating)  class="btn btn-success">Display Top Sellers</button></th>
+                <th><button name="seller" (click)=hideSeller()  class="btn btn-success">Hide</button></th>
+              </tr>
+            </table>
+          </tr>
+          <tr>
+            <table class="table" *ngIf="sellers?.length && showSellers">
+              <thead>
+                <tr>
+                  <th>Order No.</th>
+                  <th>Item Id</th>
+                  <th>Seller Name</th>
+                  <th>Buyer Name</th>
+                  <th>Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let order of sellers">
+                  <td>{{order.orderNo}}</td>
+                  <td>{{order.itemID}}</td>
+                  <td>{{order.isellerName}}</td>
+                  <td>{{order.buyerName}}</td>
+                  <td>{{order.quantity}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </tr>
+          <tr>
+            <th>
+              <label>Please enter Buyer Rating</label>
+              <input type="number"
+              [(ngModel)]="buyersRating"
+              class="form-control" name="buyersRating" required="required" >
+            </th>
+            <th><button  (click)=getBuyer(buyersRating)  class="btn btn-success">Display Top Buyers</button></th>
+          </tr>
+          <tr>
+            <table class="table" *ngIf="buyers?.length">
+              <thead>
+                <tr>
+                  <th>Order No.</th>
+                  <th>Item Id</th>
+                  <th>Seller Name</th>
+                  <th>Buyer Name</th>
+                  <th>Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let order of buyers">
+                  <td>{{order.orderNo}}</td>
+                  <td>{{order.itemID}}</td>
+                  <td>{{order.isellerName}}</td>
+                  <td>{{order.buyerName}}</td>
+                  <td>{{order.quantity}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </tr>
+          <!-- <tr>
+            <th><button  (click)=getAvailableQty(rating)  class="btn btn-success">Display quantity</button></th>
+          </tr> -->
+        </thead>
+      </table>
+  <table class="table">
+    <thead>
+      <tr>
+        <th> <button (click)=getProducts() class = "btn btn-success"> Display Certified Refurbished Products </button></th>
+      </tr>
+      <tr>
+        <table class="table" *ngIf="products?.length">
+          <thead>
+            <tr>
+              <th>Item Id</th>
+              <th>Location</th>
+              <th>Condition</th>
+              <th>Shipping Type</th>
+              <th>Available Qty</th>
+              <th>Description</th>
+              <th>Seller Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of products">
+              <td>{{item.itemId}}</td>
+              <td>{{item.location}}</td>
+              <td>{{item.conditn}}</td>
+              <td>{{item.shippingType}}</td>
+              <td>{{item.availableQty}}</td>
+              <td>{{item.description}}</td>
+              <td>{{item.iSellerName}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </tr>
+      <tr>
+        <th>
+          <input type="number"
+          [(ngModel)]="avlQty"
+          class="form-control" name="avlQty" required="required" >
+        </th>
+        <th>
+          <button (click)=getAvailableQty(avlQty) class = "btn btn-success"> Display Available Quantity</button>
+        </th>
+      </tr>
+      <tr> 
+        <table class="table" *ngIf="availData?.length">
+          <thead>
+            <tr>
+              <th>Seller Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let d of availData">
+              <td>{{d}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </tr>
+      <tr>
+        <th> <button (click)=getTopBiddingAmount() class = "btn btn-success"> Display Top Bid Amt</button></th>
+        <th>
+          <table class="table" *ngIf="qty?.length">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{qty.bidder}}</td>
+                <td>{{qty.bidAmount}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </th>
+      </tr>
+      <tr>
+        <th> <button (click)=getItemShippingType() class = "btn btn-success"> Display Item Shipping Type </button></th>
+      </tr>
+      <tr>
+        <table class="table" *ngIf="items?.length">
+          <thead>
+            <tr>
+              <th>Item Id</th>
+              <th>Location</th>
+              <th>Condition</th>
+              <th>Shipping Type</th>
+              <th>Available Qty</th>
+              <th>Description</th>
+              <th>Seller Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of items">
+              <td>{{item.itemId}}</td>
+              <td>{{item.location}}</td>
+              <td>{{item.conditn}}</td>
+              <td>{{item.shippingType}}</td>
+              <td>{{item.availableQty}}</td>
+              <td>{{item.description}}</td>
+              <td>{{item.iSellerName}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </tr>
+      <tr>
+        <th>
+          <input type="number"
+          [(ngModel)]="minQty"
+          class="form-control" name="minQty" required="required" >
+        </th>
+        <th> <button (click)=getItemMinAvailableQty(minQty) class = "btn btn-success"> Display Item Min Available Qty</button></th>
+      </tr>
+      <tr>
+        <table class="table" *ngIf="data?.length">
+          <thead>
+            <tr>
+              <th>Item Id</th>
+              <th>Qty</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let d of data">
+              <td>{{d.itemId}}</td>
+              <td>{{d.availableQty}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </tr>
+    </thead>
+  </table>
+  </fieldset>
+<!-- <button type="submit" class="btn btn-success">Save</button> -->
+</form> 
+</div>
